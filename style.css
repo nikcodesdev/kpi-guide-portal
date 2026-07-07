@@ -61,15 +61,17 @@ a { color: inherit; }
     flex: 0 0 auto;
   }
   .side h1 { display: none; }
-  .side p { font-size: 13.5px; margin-top: 6px; }
+  .side p { font-size: 13.5px; margin-top: 6px; margin-bottom: 0; }
   .side::before { display: none; }
   .badge-stack { display: none; }
+  .shell.role-mode .side { padding-bottom: 6px; }
   .main {
     position: relative;
     background: transparent;
-    padding: 18px 18px 40px;
+    padding: 18px 18px;
     flex: 1;
   }
+  .shell.role-mode .main { padding-top: 4px; }
   .main::before {
     content: "";
     position: absolute;
