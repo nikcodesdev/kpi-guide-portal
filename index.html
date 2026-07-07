@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="shell">
+<div class="shell" id="shell">
 
   <!-- Левая панель -->
   <div class="side">
@@ -140,6 +140,7 @@ const roleError = document.getElementById("roleError");
 const roleLoading = document.getElementById("roleLoading");
 const continueBtn = document.getElementById("continueBtn");
 const logoutLink = document.getElementById("logoutLink");
+const shell = document.getElementById("shell");
 
 function showError(el, msg) {
   el.textContent = msg;
@@ -284,6 +285,7 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     authCard.style.display = "none";
     roleCard.style.display = "block";
+    shell.classList.add("role-mode");
     userEmailLabel.textContent = user.email;
 
     // если у пользователя уже есть сохранённая должность — подсветим её
@@ -300,6 +302,7 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     authCard.style.display = "block";
     roleCard.style.display = "none";
+    shell.classList.remove("role-mode");
   }
 });
 </script>
