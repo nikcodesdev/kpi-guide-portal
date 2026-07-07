@@ -1,4 +1,4 @@
-/* =====================================================================
+  /* =====================================================================
    ТОКЕНЫ
    Тема: "бейдж сотрудника" — карточки должностей выглядят как ID-карты.
    Палитра: холодный нейтральный фон + фирменный оранжевый акцент (DNS).
@@ -68,28 +68,34 @@ a { color: inherit; }
   .main {
     position: relative;
     background: transparent;
-    padding: 18px 18px;
+    padding: 28px 18px 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
     flex: 1;
   }
-  .shell.role-mode .main { padding-top: 4px; }
-  .main::before {
+  .shell.role-mode .main {
+    align-items: center;
+    padding-top: 4px;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+  }
+  .card::before {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     width: 420px;
     height: 420px;
-    max-width: 130vw;
-    max-height: 130vw;
+    max-width: 140vw;
+    max-height: 140vw;
     transform: translate(-50%, -50%);
     background: radial-gradient(circle, rgba(255,106,0,0.45), transparent 70%);
     filter: blur(30px);
     pointer-events: none;
-    z-index: 0;
-  }
-  .card {
-    position: relative;
-    z-index: 1;
+    z-index: -1;
   }
 }
 
