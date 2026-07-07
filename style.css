@@ -45,7 +45,9 @@ a { color: inherit; }
 }
 
 @media (max-width: 900px) {
-  body { background: var(--ink); }
+  body {
+    background: linear-gradient(165deg, #20242F 0%, #1B1E27 55%, #23180F 100%);
+  }
   .shell {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -53,13 +55,34 @@ a { color: inherit; }
   .side {
     min-height: auto;
     padding: 20px 20px 18px;
+    background: transparent;
   }
   .side h1 { display: none; }
   .side p { font-size: 13.5px; margin-top: 6px; }
+  .side::before { display: none; }
   .badge-stack { display: none; }
   .main {
-    background: var(--ink);
-    padding: 18px 18px 32px;
+    position: relative;
+    background: transparent;
+    padding: 18px 18px 40px;
+    overflow: hidden;
+  }
+  .main::before {
+    content: "";
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    width: 380px;
+    height: 380px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,106,0,0.4), transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
   }
 }
 
