@@ -45,17 +45,20 @@ a { color: inherit; }
 }
 
 @media (max-width: 900px) {
-  body {
+  html, body {
+    min-height: 100dvh;
     background: linear-gradient(165deg, #20242F 0%, #1B1E27 55%, #23180F 100%);
   }
   .shell {
-    grid-template-columns: 1fr;
-    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
   }
   .side {
     min-height: auto;
     padding: 20px 20px 18px;
     background: transparent;
+    flex: 0 0 auto;
   }
   .side h1 { display: none; }
   .side p { font-size: 13.5px; margin-top: 6px; }
@@ -65,17 +68,19 @@ a { color: inherit; }
     position: relative;
     background: transparent;
     padding: 18px 18px 40px;
-    overflow: hidden;
+    flex: 1;
   }
   .main::before {
     content: "";
     position: absolute;
-    top: 46%;
+    top: 50%;
     left: 50%;
-    width: 380px;
-    height: 380px;
+    width: 420px;
+    height: 420px;
+    max-width: 130vw;
+    max-height: 130vw;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255,106,0,0.4), transparent 70%);
+    background: radial-gradient(circle, rgba(255,106,0,0.45), transparent 70%);
     filter: blur(30px);
     pointer-events: none;
     z-index: 0;
