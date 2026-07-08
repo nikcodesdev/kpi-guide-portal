@@ -51,28 +51,16 @@ a { color: inherit; }
     flex-direction: column;
     min-height: 100dvh;
   }
-  .side {
-    min-height: auto;
-    padding: 20px 20px 8px; /* Уменьшил нижний отступ с 18px до 8px */
-    background: transparent;
-    flex: 0 0 auto;
-  }
-  .side h1 { display: none; }
-  .side p { font-size: 13.5px; margin-top: 6px; margin-bottom: 0; }
-  .side::before { display: none; }
-  .badge-stack { display: none; }
-  .shell.role-mode .side { padding-bottom: 6px; }
+  .side { display: none; } /* УБИРАЕМ ВЕРХНИЙ БЛОК ПОЛНОСТЬЮ */
   
   .main {
     position: relative;
     background: transparent;
-    padding: 8px 18px 18px; /* Уменьшил верхний отступ с 18px до 8px */
+    padding: 24px 18px;
     flex: 1;
-    align-items: flex-start; /* ВАЖНО: переопределяем центрирование, прижимаем к верху */
-    justify-content: flex-start; /* ВАЖНО: переопределяем центрирование */
+    align-items: center;
+    justify-content: center;
   }
-  .shell.role-mode .main { padding-top: 4px; }
-  
   .main::before {
     content: "";
     position: absolute;
@@ -88,11 +76,9 @@ a { color: inherit; }
     pointer-events: none;
     z-index: 0;
   }
-  
   .card {
     position: relative;
     z-index: 1;
-    margin-top: 8px; /* Небольшой отступ от текста */
   }
 }
 
