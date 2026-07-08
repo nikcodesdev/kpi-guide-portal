@@ -1,287 +1,311 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KPI Guide — вход</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KPI Guide — вход</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!-- Установка на домашний экран -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="theme-color" content="#FF6A00">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KPI Guide">
 </head>
 <body>
-  <div class="shell" id="shell">
-    <!-- Левая панель с брендингом (скрыта на мобильных) -->
-    <aside class="side">
-      <div>
-        <div class="brand">KPI GUIDE</div>
-        <h1>Твой личный помощник в работе</h1>
-        <p>Зарегистрируйся, выбери свою должность — и попадёшь на страницу с материалами именно для неё.</p>
-        <div class="badge-stack">
-          <div class="mini-badge mb-1"><span></span><span></span><span></span></div>
-          <div class="mini-badge mb-2"><span></span><span></span><span></span></div>
-          <div class="mini-badge mb-3"><span></span><span></span><span></span></div>
-        </div>
-      </div>
-    </aside>
 
-    <!-- Основная область с формой -->
-    <main class="main">
-      <!-- Карточка входа/регистрации -->
-      <div class="card" id="authCard">
-        <h2 id="authTitle">Вход</h2>
-        <p class="sub" id="authSub">Введи почту и пароль, чтобы продолжить.</p>
+<div class="shell" id="shell">
 
-        <div class="error-msg" id="errorMsg"></div>
+  <!-- Левая панель -->
+  <div class="side">
+    <div>
+      <div class="brand">KPI GUIDE</div>
+      <h1 id="sideHeadline">Твой личный помощник в работе</h1>
+      <p id="sideSub">Зарегистрируйся, выбери свою должность — и попадёшь на страницу с материалами именно для неё.</p>
+    </div>
 
-        <form id="authForm" novalidate>
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="name@dns-shop.ru" required />
-          </div>
-          <div class="field">
-            <label for="password">Пароль</label>
-            <input type="password" id="password" placeholder="Минимум 6 символов" required />
-          </div>
-          <div class="field" id="confirmField" style="display: none;">
-            <label for="confirmPassword">Повтори пароль</label>
-            <input type="password" id="confirmPassword" placeholder="Повтори пароль" />
-          </div>
-          <button type="submit" class="btn" id="submitBtn">Войти</button>
-        </form>
-
-        <div class="loading-msg" id="loadingMsg">Проверяем...</div>
-
-        <div class="switch-mode">
-          <span id="switchText">Ещё нет аккаунта?</span>
-          <button type="button" id="switchBtn">Зарегистрироваться</button>
-        </div>
-      </div>
-
-      <!-- Карточка выбора должности (после входа) -->
-      <div class="card" id="roleCard" style="display: none;">
-        <a href="#" class="top-right-link" id="logoutLink">Выйти</a>
-        <div class="user-chip" id="userChip">
-          Вошёл как <strong id="userEmail">—</strong>
-        </div>
-        <h2>Выбери должность</h2>
-        <p class="sub">Это определит, какие материалы тебе открыть.</p>
-
-        <div class="badge-grid" id="badgeGrid">
-          <button class="badge-card" data-role="usm">
-            <div class="stripe"></div>
-            <p class="role-name">УСМ</p>
-            <p class="role-desc">Материалы и KPI для УСМ</p>
-          </button>
-          <button class="badge-card" data-role="sklad">
-            <div class="stripe"></div>
-            <p class="role-name">Кладовщик</p>
-            <p class="role-desc">Материалы и KPI для склада</p>
-          </button>
-          <button class="badge-card" data-role="pk">
-            <div class="stripe"></div>
-            <p class="role-name">Продавец-консультант</p>
-            <p class="role-desc">Материалы и KPI для продаж</p>
-          </button>
-        </div>
-
-        <button class="btn" id="continueBtn" disabled style="margin-top: 20px;">Продолжить</button>
-        <div class="loading-msg" id="roleLoadingMsg">Открываем страницу...</div>
-      </div>
-
-      <!-- Кнопка помощи (только мобильные) -->
-      <button class="help-btn" id="helpBtn" aria-label="Помощь">?</button>
-
-      <!-- Подсказка (только мобильные) -->
-      <div class="help-tooltip" id="helpTooltip">
-        <p><strong>Добро пожаловать в KPI GUIDE! 👋</strong></p>
-        <p>Твой личный помощник в работе.</p>
-        <p><strong>Если ты здесь впервые:</strong></p>
-        <ol>
-          <li>Нажми "Зарегистрироваться"</li>
-          <li>Выбери свою должность</li>
-          <li>Не используй пароль от корпоративной почты.</li>
-        </ol>
-        <p><strong>Если уже есть аккаунт:</strong> просто войди по почте и паролю.</p>
-      </div>
-    </main>
+    <div class="badge-stack">
+      <div class="mini-badge mb-1"><span></span><span></span><span style="width:40%"></span></div>
+      <div class="mini-badge mb-2"><span></span><span></span><span style="width:70%"></span></div>
+      <div class="mini-badge mb-3"><span></span><span></span><span style="width:50%"></span></div>
+    </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { firebaseConfig, ADMIN_EMAIL, POSITION_PAGES } from "./firebase-config.js";
+  <!-- Правая панель -->
+  <div class="main">
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    <!-- ЭКРАН 1: Вход / Регистрация -->
+    <div class="card" id="authCard">
+      <h2 id="authTitle">Вход</h2>
+      <p class="sub" id="authSub">Введи почту и пароль, чтобы продолжить.</p>
 
-    const shell = document.getElementById("shell");
-    const authCard = document.getElementById("authCard");
-    const roleCard = document.getElementById("roleCard");
-    const authForm = document.getElementById("authForm");
-    const authTitle = document.getElementById("authTitle");
-    const authSub = document.getElementById("authSub");
-    const submitBtn = document.getElementById("submitBtn");
-    const switchBtn = document.getElementById("switchBtn");
-    const switchText = document.getElementById("switchText");
-    const confirmField = document.getElementById("confirmField");
-    const errorMsg = document.getElementById("errorMsg");
-    const loadingMsg = document.getElementById("loadingMsg");
-    const logoutLink = document.getElementById("logoutLink");
-    const userEmailEl = document.getElementById("userEmail");
-    const badgeGrid = document.getElementById("badgeGrid");
-    const continueBtn = document.getElementById("continueBtn");
-    const roleLoadingMsg = document.getElementById("roleLoadingMsg");
+      <div class="error-msg" id="authError"></div>
 
-    let isRegister = false;
-    let selectedRole = null;
-    let currentUser = null;
+      <form id="authForm">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" required autocomplete="email" placeholder="name@dns-shop.ru">
+        </div>
+        <div class="field">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" required autocomplete="current-password" placeholder="Минимум 6 символов">
+        </div>
+        <div class="field" id="confirmField" style="display:none;">
+          <label for="confirmPassword">Повтори пароль</label>
+          <input type="password" id="confirmPassword" autocomplete="new-password" placeholder="Ещё раз пароль">
+        </div>
 
-    function showError(msg) {
-      errorMsg.textContent = msg;
-      errorMsg.classList.add("show");
-    }
-    function hideError() {
-      errorMsg.classList.remove("show");
-    }
-    function setLoading(loading) {
-      submitBtn.disabled = loading;
-      loadingMsg.classList.toggle("show", loading);
-      if (loading) submitBtn.textContent = "Проверяем...";
-      else submitBtn.textContent = isRegister ? "Зарегистрироваться" : "Войти";
-    }
+        <button type="submit" class="btn" id="authSubmit">Войти</button>
+        <div class="loading-msg" id="authLoading">Проверяем...</div>
+      </form>
 
-    function switchMode() {
-      isRegister = !isRegister;
-      hideError();
-      if (isRegister) {
-        authTitle.textContent = "Регистрация";
-        authSub.textContent = "Создай аккаунт, чтобы получить доступ к материалам.";
-        confirmField.style.display = "block";
-        submitBtn.textContent = "Зарегистрироваться";
-        switchText.textContent = "Уже есть аккаунт?";
-        switchBtn.textContent = "Войти";
-      } else {
-        authTitle.textContent = "Вход";
-        authSub.textContent = "Введи почту и пароль, чтобы продолжить.";
-        confirmField.style.display = "none";
-        submitBtn.textContent = "Войти";
-        switchText.textContent = "Ещё нет аккаунта?";
-        switchBtn.textContent = "Зарегистрироваться";
-      }
-    }
+      <div class="switch-mode">
+        <span id="switchText">Ещё нет аккаунта?</span>
+        <button type="button" id="switchBtn">Зарегистрироваться</button>
+      </div>
+    </div>
 
-    switchBtn.addEventListener("click", switchMode);
+    <!-- ЭКРАН 2: Выбор / смена должности -->
+    <div class="card" id="roleCard" style="display:none;">
+      <a href="#" class="top-right-link" id="logoutLink">Выйти</a>
+      <h2>Выбери должность</h2>
+      <p class="sub" id="roleSub">Это определит, какие материалы тебе открыть.</p>
 
-    authForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      hideError();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
+      <div class="user-chip">
+        Вошёл как <strong id="userEmailLabel"></strong>
+      </div>
 
-      if (!email || !password) { showError("Заполни все поля."); return; }
-      if (password.length < 6) { showError("Пароль должен быть минимум 6 символов."); return; }
-      if (isRegister && password !== confirmPassword) { showError("Пароли не совпадают."); return; }
+      <div class="error-msg" id="roleError"></div>
 
-      setLoading(true);
-      try {
-        if (isRegister) {
-          const cred = await createUserWithEmailAndPassword(auth, email, password);
-          await setDoc(doc(db, "users", cred.user.uid), {
-            email: email.toLowerCase(),
-            createdAt: serverTimestamp(),
-          });
-        } else {
-          await signInWithEmailAndPassword(auth, email, password);
-        }
-      } catch (err) {
-        const code = err.code;
-        if (code === "auth/email-already-in-use") showError("Этот email уже зарегистрирован.");
-        else if (code === "auth/invalid-email") showError("Некорректный email.");
-        else if (code === "auth/weak-password") showError("Пароль слишком слабый.");
-        else if (code === "auth/user-not-found" || code === "auth/wrong-password" || code === "auth/invalid-credential") showError("Неверный email или пароль.");
-        else showError("Ошибка: " + err.message);
-        setLoading(false);
-      }
-    });
+      <div class="badge-grid" id="badgeGrid">
+        <button type="button" class="badge-card" data-role="usm">
+          <div class="stripe"></div>
+          <p class="role-name">УСМ</p>
+          <p class="role-desc">Материалы и KPI для УСМ</p>
+        </button>
+        <button type="button" class="badge-card" data-role="sklad">
+          <div class="stripe"></div>
+          <p class="role-name">Кладовщик</p>
+          <p class="role-desc">Материалы и KPI для склада</p>
+        </button>
+        <button type="button" class="badge-card" data-role="pk">
+          <div class="stripe"></div>
+          <p class="role-name">Продавец-консультант</p>
+          <p class="role-desc">Материалы и KPI для продаж</p>
+        </button>
+      </div>
 
-    logoutLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      signOut(auth);
-    });
+      <button type="button" class="btn" id="continueBtn" style="margin-top:20px;" disabled>Продолжить</button>
+      <div class="loading-msg" id="roleLoading">Открываем страницу...</div>
+    </div>
 
-    badgeGrid.addEventListener("click", (e) => {
-      const card = e.target.closest(".badge-card");
-      if (!card) return;
-      badgeGrid.querySelectorAll(".badge-card").forEach(c => c.classList.remove("selected"));
-      card.classList.add("selected");
-      selectedRole = card.dataset.role;
-      continueBtn.disabled = false;
-    });
+  </div>
+</div>
 
-    continueBtn.addEventListener("click", async () => {
-      if (!selectedRole || !currentUser) return;
-      const page = POSITION_PAGES[selectedRole]?.page;
-      if (!page) return;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { firebaseConfig, POSITION_PAGES } from "./firebase-config.js";
 
-      continueBtn.disabled = true;
-      roleLoadingMsg.classList.add("show");
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-      // Создаём сессию
-      const sessionId = crypto.randomUUID();
-      try {
-        await setDoc(doc(db, "sessions", sessionId), {
-          userId: currentUser.uid,
-          email: currentUser.email.toLowerCase(),
-          role: selectedRole,
-          roleLabel: POSITION_PAGES[selectedRole].label,
-          page: page,
-          startTime: serverTimestamp(),
-        });
-        sessionStorage.setItem("kpiGuideSessionId", sessionId);
-        window.location.href = page;
-      } catch (err) {
-        showError("Не удалось создать сессию: " + err.message);
-        continueBtn.disabled = false;
-        roleLoadingMsg.classList.remove("show");
-      }
-    });
+let isRegisterMode = false;
+let selectedRole = null;
 
-    onAuthStateChanged(async (user) => {
-      currentUser = user;
-      if (user) {
-        authCard.style.display = "none";
-        roleCard.style.display = "block";
-        userEmailEl.textContent = user.email;
-        shell.classList.add("role-mode");
-      } else {
-        authCard.style.display = "block";
-        roleCard.style.display = "none";
-        shell.classList.remove("role-mode");
-        selectedRole = null;
-        continueBtn.disabled = true;
-        badgeGrid.querySelectorAll(".badge-card").forEach(c => c.classList.remove("selected"));
-      }
-    });
+const authCard = document.getElementById("authCard");
+const roleCard = document.getElementById("roleCard");
+const authForm = document.getElementById("authForm");
+const authTitle = document.getElementById("authTitle");
+const authSub = document.getElementById("authSub");
+const authSubmit = document.getElementById("authSubmit");
+const authError = document.getElementById("authError");
+const authLoading = document.getElementById("authLoading");
+const confirmField = document.getElementById("confirmField");
+const switchText = document.getElementById("switchText");
+const switchBtn = document.getElementById("switchBtn");
+const userEmailLabel = document.getElementById("userEmailLabel");
+const roleError = document.getElementById("roleError");
+const roleLoading = document.getElementById("roleLoading");
+const continueBtn = document.getElementById("continueBtn");
+const logoutLink = document.getElementById("logoutLink");
+const shell = document.getElementById("shell");
 
-    // Логика кнопки помощи (только мобильные)
-    const helpBtn = document.getElementById("helpBtn");
-    const helpTooltip = document.getElementById("helpTooltip");
-    if (helpBtn && helpTooltip) {
-      helpBtn.addEventListener("click", () => {
-        const isOpen = helpTooltip.classList.contains("show");
-        if (isOpen) {
-          helpTooltip.classList.remove("show");
-          helpBtn.classList.remove("active");
-        } else {
-          helpTooltip.classList.add("show");
-          helpBtn.classList.add("active");
-        }
+function showError(el, msg) {
+  el.textContent = msg;
+  el.classList.add("show");
+}
+function hideError(el) {
+  el.classList.remove("show");
+}
+
+switchBtn.addEventListener("click", () => {
+  isRegisterMode = !isRegisterMode;
+  if (isRegisterMode) {
+    authTitle.textContent = "Регистрация";
+    authSub.textContent = "Придумай пароль — он понадобится для следующего входа.";
+    authSubmit.textContent = "Зарегистрироваться";
+    confirmField.style.display = "block";
+    document.getElementById("confirmPassword").required = true;
+    switchText.textContent = "Уже есть аккаунт?";
+    switchBtn.textContent = "Войти";
+  } else {
+    authTitle.textContent = "Вход";
+    authSub.textContent = "Введи почту и пароль, чтобы продолжить.";
+    authSubmit.textContent = "Войти";
+    confirmField.style.display = "none";
+    document.getElementById("confirmPassword").required = false;
+    switchText.textContent = "Ещё нет аккаунта?";
+    switchBtn.textContent = "Зарегистрироваться";
+  }
+  hideError(authError);
+});
+
+authForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideError(authError);
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (isRegisterMode && password.length < 6) {
+    showError(authError, "Пароль должен быть не короче 6 символов.");
+    return;
+  }
+  if (isRegisterMode && password !== confirmPassword) {
+    showError(authError, "Пароли не совпадают.");
+    return;
+  }
+
+  authSubmit.disabled = true;
+  authLoading.classList.add("show");
+
+  try {
+    if (isRegisterMode) {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", cred.user.uid), {
+        email,
+        position: null,
+        createdAt: serverTimestamp(),
       });
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
     }
-  </script>
+    // дальше подхватит onAuthStateChanged
+  } catch (err) {
+    authSubmit.disabled = false;
+    authLoading.classList.remove("show");
+    showError(authError, translateAuthError(err.code));
+  }
+});
+
+function translateAuthError(code) {
+  const map = {
+    "auth/email-already-in-use": "Этот email уже зарегистрирован. Попробуй войти.",
+    "auth/invalid-email": "Некорректный email.",
+    "auth/weak-password": "Пароль слишком простой (минимум 6 символов).",
+    "auth/user-not-found": "Пользователь с таким email не найден.",
+    "auth/wrong-password": "Неверный пароль.",
+    "auth/invalid-credential": "Неверный email или пароль.",
+  };
+  return map[code] || "Что-то пошло не так. Попробуй ещё раз.";
+}
+
+// ---------- Экран выбора должности ----------
+document.querySelectorAll(".badge-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".badge-card").forEach((c) => c.classList.remove("selected"));
+    card.classList.add("selected");
+    selectedRole = card.dataset.role;
+    continueBtn.disabled = false;
+  });
+});
+
+continueBtn.addEventListener("click", async () => {
+  if (!selectedRole) return;
+  hideError(roleError);
+  continueBtn.disabled = true;
+  roleLoading.classList.add("show");
+
+  const user = auth.currentUser;
+  if (!user) return;
+
+  try {
+    // сохраняем/обновляем должность
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
+      position: selectedRole,
+      updatedAt: serverTimestamp(),
+    }, { merge: true });
+
+    // логируем начало сессии
+    const sessionRef = await addDoc(collection(db, "sessions"), {
+      uid: user.uid,
+      email: user.email,
+      position: selectedRole,
+      page: POSITION_PAGES[selectedRole].page,
+      startTime: serverTimestamp(),
+      endTime: null,
+    });
+
+    // передаём id сессии странице должности, чтобы она (когда появится)
+    // могла зафиксировать момент завершения — см. session-tracker.js
+    sessionStorage.setItem("kpiGuideSessionId", sessionRef.id);
+
+    window.location.href = POSITION_PAGES[selectedRole].page;
+  } catch (err) {
+    continueBtn.disabled = false;
+    roleLoading.classList.remove("show");
+    showError(roleError, "Не удалось сохранить выбор. Попробуй ещё раз.");
+  }
+});
+
+logoutLink.addEventListener("click", async (e) => {
+  e.preventDefault();
+  await signOut(auth);
+});
+
+// ---------- Состояние авторизации ----------
+onAuthStateChanged(auth, async (user) => {
+  authSubmit.disabled = false;
+  authLoading.classList.remove("show");
+
+  if (user) {
+    authCard.style.display = "none";
+    roleCard.style.display = "block";
+    shell.classList.add("role-mode");
+    userEmailLabel.textContent = user.email;
+
+    // если у пользователя уже есть сохранённая должность — подсветим её
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists() && snap.data().position) {
+      const savedRole = snap.data().position;
+      const card = document.querySelector(`.badge-card[data-role="${savedRole}"]`);
+      if (card) {
+        card.classList.add("selected");
+        selectedRole = savedRole;
+        continueBtn.disabled = false;
+      }
+    }
+  } else {
+    authCard.style.display = "block";
+    roleCard.style.display = "none";
+    shell.classList.remove("role-mode");
+  }
+});
+</script>
+
 </body>
 </html>
