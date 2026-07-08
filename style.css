@@ -522,13 +522,7 @@ a { color: inherit; }
   font-size: 48px;
   line-height: 1;
   margin-bottom: 8px;
-  animation: wave 2s ease-in-out infinite;
-}
-
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(10deg); }
-  75% { transform: rotate(-10deg); }
+  /* Анимация wave удалена, иконка статична */
 }
 
 .modal-title {
