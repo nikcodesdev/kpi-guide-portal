@@ -747,3 +747,28 @@ body.modal-open {
 .badge-stack {
   flex-shrink: 0;
 }
+
+/* =====================================================================
+КНОПКА "ВЫЙТИ" - ОРАНЖЕВЫЙ ЦВЕТ
+===================================================================== */
+
+/* Стиль для кнопки "Выйти" в правом верхнем углу */
+.top-right-link {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 13px;
+  color: var(--orange) !important; /* Оранжевый цвет */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.top-right-link:hover {
+  color: var(--orange-deep) !important; /* Более темный оранжевый при наведении */
+  transform: translateY(-1px);
+}
+
+.top-right-link:active {
+  transform: scale(0.95);
+}
