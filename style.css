@@ -118,7 +118,7 @@ a { color: inherit; }
   line-height: 1.15;
   font-weight: 600;
   max-width: 480px;
-  margin: 24px 0;
+  margin: 24px 0 0 0;
 }
 .side p {
   color: #B7BBC6;
@@ -648,4 +648,109 @@ a { color: inherit; }
 /* Скрываем скролл при открытой модалке */
 body.modal-open {
   overflow: hidden;
+}
+
+/* =====================================================================
+ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ЛЕВОЙ ПАНЕЛИ (ДЕСКТОП)
+===================================================================== */
+
+/* Контент левой панели с центрированием */
+.side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.side > div:first-child {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.side-content {
+  margin-top: 12px;
+}
+
+.welcome-text {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  font-family: var(--font-display);
+}
+
+.welcome-sub {
+  font-size: 16px;
+  color: #B7BBC6;
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+}
+
+.info-block {
+  max-width: 400px;
+}
+
+.info-section {
+  margin-bottom: 16px;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.info-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #D0D4DD;
+  margin-bottom: 8px;
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #B7BBC6;
+}
+
+.info-list li {
+  margin-bottom: 2px;
+}
+
+.info-list li::marker {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.info-list .highlight {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #B7BBC6;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.info-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 16px 0;
+}
+
+/* Адаптация для мобильных - скрываем новый контент */
+@media (max-width: 900px) {
+  .side-content {
+    display: none;
+  }
+}
+
+/* Убеждаемся что бейджики остаются внизу */
+.badge-stack {
+  flex-shrink: 0;
 }
