@@ -53,7 +53,7 @@ a { color: inherit; }
   }
   .side {
     min-height: auto;
-    padding: 20px 20px 8px; /* Уменьшил нижний отступ, чтобы не было двойного "воздуха" */
+    padding: 20px 20px 8px; /* Уменьшил нижний отступ с 18px до 8px */
     background: transparent;
     flex: 0 0 auto;
   }
@@ -66,10 +66,10 @@ a { color: inherit; }
   .main {
     position: relative;
     background: transparent;
-    padding: 8px 18px 18px; /* Уменьшил верхний отступ */
+    padding: 8px 18px 18px; /* Уменьшил верхний отступ с 18px до 8px */
     flex: 1;
-    align-items: flex-start; /* ВАЖНО: прижимаем карточку к верху */
-    justify-content: flex-start; /* ВАЖНО: прижимаем к началу */
+    align-items: flex-start; /* ВАЖНО: переопределяем центрирование, прижимаем к верху */
+    justify-content: flex-start; /* ВАЖНО: переопределяем центрирование */
   }
   .shell.role-mode .main { padding-top: 4px; }
   
@@ -92,7 +92,7 @@ a { color: inherit; }
   .card {
     position: relative;
     z-index: 1;
-    margin-top: 8px; /* Небольшой визуальный отступ от текста */
+    margin-top: 8px; /* Небольшой отступ от текста */
   }
 }
 
