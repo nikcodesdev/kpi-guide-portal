@@ -40,9 +40,9 @@
 
     <!-- ЭКРАН 1: Вход / Регистрация -->
     <div class="card" id="authCard">
-      <!-- Кнопка помощи в правом верхнем углу -->
-      <button class="help-btn" id="helpBtn" aria-label="Помощь">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Кнопка помощи (только на мобильных) -->
+      <button class="help-btn-mobile" id="helpBtn" aria-label="Помощь">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
           <line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -195,9 +195,25 @@ const helpModal = document.getElementById("helpModal");
 const modalClose = document.getElementById("modalClose");
 const modalConfirm = document.getElementById("modalConfirm");
 
+// Проверяем, использовали ли уже подсказку
+const hasUsedHelp = localStorage.getItem("kpiGuideHelpUsed");
+
+// Если использовали - делаем кнопку полупрозрачной
+if (hasUsedHelp) {
+  helpBtn.classList.add("was-used");
+}
+
 function openModal() {
   helpModal.classList.add("active");
   document.body.style.overflow = "hidden";
+  
+  // Запоминаем, что подсказку использовали
+  if (!localStorage.getItem("kpiGuideHelpUsed")) {
+    localStorage.setItem("kpiGuideHelpUsed", "true");
+    setTimeout(() => {
+      helpBtn.classList.add("was-used");
+    }, 3000); // Добавляем класс через 3 секунды после закрытия
+  }
 }
 
 function closeModal() {
