@@ -1,0 +1,368 @@
+/* =====================================================================
+ТОКЕНЫ
+Тема: "бейдж сотрудника" — карточки должностей выглядят как ID-карты.
+Палитра: холодный нейтральный фон + фирменный оранжевый акцент (DNS).
+===================================================================== */
+:root {
+  --ink: #1B1E27;
+  --ink-soft: #5B6170;
+  --bg: #F1F2F5;
+  --surface: #FFFFFF;
+  --orange: #FF6A00;
+  --orange-deep: #E85D00;
+  --orange-tint: #FFE9D6;
+  --line: #E4E6EB;
+  --green: #1E9E5A;
+  --red: #D8382B;
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* ---------- Layout: split hero ---------- */
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+}
+
+@media (max-width: 900px) {
+  html, body {
+    min-height: 100dvh;
+    background: linear-gradient(165deg, #20242F 0%, #1B1E27 55%, #23180F 100%);
+  }
+  .shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+  .side {
+    min-height: auto;
+    padding: 20px 20px 18px;
+    background: transparent;
+    flex: 0 0 auto;
+  }
+  .side h1 { display: none; }
+  .side p { font-size: 13.5px; margin-top: 6px; margin-bottom: 0; }
+  .side::before { display: none; }
+  .badge-stack { display: none; }
+  .shell.role-mode .side { padding-bottom: 6px; }
+  .main {
+    position: relative;
+    background: transparent;
+    padding: 18px 18px;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 16px;
+  }
+  .shell.role-mode .main { padding-top: 4px; }
+  .main::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    height: 420px;
+    max-width: 130vw;
+    max-height: 130vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,106,0,0.45), transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+  }
+}
+
+.side {
+  background: var(--ink);
+  color: #fff;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.side::before {
+  content: "";
+  position: absolute;
+  right: -120px;
+  bottom: -120px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,106,0,0.35), transparent 70%);
+}
+.brand {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 600;
+}
+.side h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.15;
+  font-weight: 600;
+  max-width: 480px;
+  margin: 24px 0;
+}
+.side p {
+  color: #B7BBC6;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 420px;
+}
+.badge-stack {
+  position: relative;
+  height: 160px;
+  margin-top: 32px;
+}
+.mini-badge {
+  position: absolute;
+  width: 130px;
+  height: 84px;
+  background: #262A36;
+  border: 1px solid #383D4C;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+.mini-badge::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 8px;
+  border-radius: 4px;
+  background: #4A5063;
+}
+.mini-badge span {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: #454B5C;
+  margin-top: 8px;
+}
+.mini-badge span:first-child { width: 60%; background: var(--orange); margin-top: 0; height: 8px; }
+.mb-1 { top: 0; left: 10px; transform: rotate(-8deg); }
+.mb-2 { top: 20px; left: 130px; transform: rotate(6deg); z-index: 2; }
+.mb-3 { top: 55px; left: 40px; transform: rotate(3deg); }
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px;
+  box-shadow: 0 1px 2px rgba(20,22,30,0.04);
+  border: 1px solid var(--line);
+}
+.card h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+.card .sub {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin: 0 0 28px;
+}
+
+/* ---------- Form ---------- */
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line);
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: #FBFBFC;
+  transition: border-color 0.15s ease;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--orange);
+  background: #fff;
+}
+.hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.btn {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn:hover { background: var(--orange-deep); }
+.btn:active { transform: scale(0.98); }
+.btn:focus-visible { outline: 2px solid var(--orange-deep); outline-offset: 2px; }
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+.btn-ghost:hover { background: #F5F6F8; border-color: var(--ink-soft); }
+.switch-mode {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.switch-mode button {
+  background: none;
+  border: none;
+  color: var(--orange-deep);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+.error-msg {
+  background: #FDEDEB;
+  color: var(--red);
+  border: 1px solid #F6C9C2;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 16px;
+  display: none;
+}
+.error-msg.show { display: block; }
+.loading-msg {
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 12px;
+  display: none;
+}
+.loading-msg.show { display: block; }
+
+/* ---------- Badge / position cards (signature element) ---------- */
+.badge-grid {
+  display: grid;
+  gap: 14px;
+}
+.badge-card {
+  position: relative;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px 18px 16px;
+  cursor: pointer;
+  background: var(--surface);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  text-align: left;
+}
+.badge-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 24px;
+  width: 26px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--line);
+  transition: background 0.15s ease;
+}
+.badge-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255,106,0,0.12);
+}
+.badge-card:hover::before { background: var(--orange); }
+.badge-card .stripe {
+  width: 34px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--orange);
+  margin-bottom: 12px;
+}
+.badge-card .role-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+.badge-card .role-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.badge-card.selected {
+  border-color: var(--orange);
+  background: var(--orange-tint);
+}
+.badge-card.selected::before { background: var(--orange); }
+
+.top-right-link {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.top-right-link:hover { color: var(--ink); }
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F5F6F8;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.user-chip strong { color: var(--ink); font-weight: 600; }
