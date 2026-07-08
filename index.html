@@ -224,21 +224,56 @@ if (hasUsedHelp) {
 }
 
 function openModal() {
-  helpModal.classList.add("active");
-  document.body.style.overflow = "hidden";
+  // Сначала показываем оверлей (скрытый, без анимации)
+  helpModal.style.display = "flex";
+  helpModal.style.opacity = "0";
+  helpModal.style.visibility = "hidden";
+  
+  // Принудительно сбрасываем transform у модального окна
+  const modal = helpModal.querySelector('.modal');
+  modal.style.transform = "scale(0.92) translateY(20px)";
+  modal.style.transition = "none";
   
   // Запоминаем, что подсказку использовали
   if (!localStorage.getItem("kpiGuideHelpUsed")) {
     localStorage.setItem("kpiGuideHelpUsed", "true");
     setTimeout(() => {
       helpBtn.classList.add("was-used");
-    }, 3000); // Добавляем класс через 3 секунды после закрытия
+    }, 3000);
   }
+  
+  // Небольшая задержка для применения стилей, затем запускаем анимацию
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      // Включаем анимацию для открытия
+      modal.style.transition = "all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
+      helpModal.style.transition = "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+      
+      helpModal.style.opacity = "1";
+      helpModal.style.visibility = "visible";
+      modal.style.transform = "scale(1) translateY(0)";
+      
+      document.body.style.overflow = "hidden";
+    });
+  });
 }
 
 function closeModal() {
-  helpModal.classList.remove("active");
+  // Мгновенно скрываем без анимации
+  helpModal.style.transition = "none";
+  helpModal.style.opacity = "0";
+  helpModal.style.visibility = "hidden";
+  
+  const modal = helpModal.querySelector('.modal');
+  modal.style.transition = "none";
+  modal.style.transform = "scale(0.92) translateY(20px)";
+  
   document.body.style.overflow = "";
+  
+  // Скрываем полностью через небольшую задержку (чтобы успеть применить стили)
+  setTimeout(() => {
+    helpModal.style.display = "none";
+  }, 50);
 }
 
 // Открытие по кнопке
@@ -259,7 +294,7 @@ helpModal.addEventListener("click", (e) => {
 
 // Закрытие по Escape
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && helpModal.classList.contains("active")) {
+  if (e.key === "Escape" && helpModal.style.visibility === "visible") {
     closeModal();
   }
 });
