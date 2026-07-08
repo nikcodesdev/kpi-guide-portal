@@ -40,6 +40,15 @@
 
     <!-- ЭКРАН 1: Вход / Регистрация -->
     <div class="card" id="authCard">
+      <!-- Кнопка помощи в правом верхнем углу -->
+      <button class="help-btn" id="helpBtn" aria-label="Помощь">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+
       <h2 id="authTitle">Вход</h2>
       <p class="sub" id="authSub">Введи почту и пароль, чтобы продолжить.</p>
 
@@ -106,6 +115,44 @@
   </div>
 </div>
 
+<!-- МОДАЛЬНОЕ ОКНО С ПОДСКАЗКОЙ -->
+<div class="modal-overlay" id="helpModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть подсказку">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    
+    <div class="modal-content">
+      <div class="modal-icon">👋</div>
+      <h2 class="modal-title">Добро пожаловать в KPI GUIDE!</h2>
+      <p class="modal-subtitle">Твой личный помощник в работе.</p>
+      
+      <div class="modal-divider"></div>
+      
+      <div class="modal-section">
+        <div class="modal-section-title">Если ты здесь впервые:</div>
+        <ol class="modal-list">
+          <li>Нажми <span class="highlight">"Зарегистрироваться"</span></li>
+          <li>Выбери свою должность</li>
+          <li>Не используй пароль от корпоративной почты</li>
+        </ol>
+      </div>
+      
+      <div class="modal-divider"></div>
+      
+      <div class="modal-section">
+        <div class="modal-section-title">Если уже есть аккаунт:</div>
+        <p class="modal-text">просто войди по почте и паролю.</p>
+      </div>
+      
+      <button class="modal-btn" id="modalConfirm">Понятно!</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
@@ -141,6 +188,47 @@ const roleLoading = document.getElementById("roleLoading");
 const continueBtn = document.getElementById("continueBtn");
 const logoutLink = document.getElementById("logoutLink");
 const shell = document.getElementById("shell");
+
+// ===================== МОДАЛЬНОЕ ОКНО =====================
+const helpBtn = document.getElementById("helpBtn");
+const helpModal = document.getElementById("helpModal");
+const modalClose = document.getElementById("modalClose");
+const modalConfirm = document.getElementById("modalConfirm");
+
+function openModal() {
+  helpModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  helpModal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+// Открытие по кнопке
+helpBtn.addEventListener("click", openModal);
+
+// Закрытие по крестику
+modalClose.addEventListener("click", closeModal);
+
+// Закрытие по кнопке "Понятно!"
+modalConfirm.addEventListener("click", closeModal);
+
+// Закрытие по клику вне модалки
+helpModal.addEventListener("click", (e) => {
+  if (e.target === helpModal) {
+    closeModal();
+  }
+});
+
+// Закрытие по Escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && helpModal.classList.contains("active")) {
+    closeModal();
+  }
+});
+
+// ===================== ОСТАЛЬНАЯ ЛОГИКА =====================
 
 function showError(el, msg) {
   el.textContent = msg;
@@ -203,7 +291,6 @@ authForm.addEventListener("submit", async (e) => {
     } else {
       await signInWithEmailAndPassword(auth, email, password);
     }
-    // дальше подхватит onAuthStateChanged
   } catch (err) {
     authSubmit.disabled = false;
     authLoading.classList.remove("show");
@@ -243,14 +330,12 @@ continueBtn.addEventListener("click", async () => {
   if (!user) return;
 
   try {
-    // сохраняем/обновляем должность
     await setDoc(doc(db, "users", user.uid), {
       email: user.email,
       position: selectedRole,
       updatedAt: serverTimestamp(),
     }, { merge: true });
 
-    // логируем начало сессии
     const sessionRef = await addDoc(collection(db, "sessions"), {
       uid: user.uid,
       email: user.email,
@@ -260,8 +345,6 @@ continueBtn.addEventListener("click", async () => {
       endTime: null,
     });
 
-    // передаём id сессии странице должности, чтобы она (когда появится)
-    // могла зафиксировать момент завершения — см. session-tracker.js
     sessionStorage.setItem("kpiGuideSessionId", sessionRef.id);
 
     window.location.href = POSITION_PAGES[selectedRole].page;
@@ -288,7 +371,6 @@ onAuthStateChanged(auth, async (user) => {
     shell.classList.add("role-mode");
     userEmailLabel.textContent = user.email;
 
-    // если у пользователя уже есть сохранённая должность — подсветим её
     const snap = await getDoc(doc(db, "users", user.uid));
     if (snap.exists() && snap.data().position) {
       const savedRole = snap.data().position;
