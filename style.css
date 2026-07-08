@@ -51,9 +51,10 @@ a { color: inherit; }
     flex-direction: column;
     min-height: 100dvh;
   }
-  .side {
-    display: none !important; /* Скрываем верхний блок на мобильных */
+  .side { 
+    display: none !important; /* СКРЫВАЕМ ВЕРХНИЙ БЛОК ПОЛНОСТЬЮ */
   }
+  
   .main {
     position: relative;
     background: transparent;
@@ -357,85 +358,3 @@ a { color: inherit; }
   color: var(--ink-soft);
 }
 .user-chip strong { color: var(--ink); font-weight: 600; }
-
-/* ---------- Help button & tooltip (mobile only) ---------- */
-@media (max-width: 900px) {
-  .help-btn {
-    position: relative;
-    z-index: 2;
-    width: 40px;
-    height: 40px;
-    margin: 24px auto 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--orange);
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    font-size: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease;
-    box-shadow: 0 4px 12px rgba(255, 106, 0, 0.3);
-  }
-
-  .help-btn:hover {
-    background: var(--orange-deep);
-    transform: scale(1.05);
-  }
-
-  .help-btn:active {
-    transform: scale(0.95);
-  }
-
-  .help-btn.active {
-    background: var(--orange-deep);
-  }
-
-  .help-tooltip {
-    position: relative;
-    z-index: 2;
-    max-width: 400px;
-    margin: 16px auto 0;
-    padding: 20px 24px;
-    background: rgba(27, 30, 39, 0.95);
-    backdrop-filter: blur(8px);
-    border-radius: var(--radius-md);
-    color: #fff;
-    font-size: 14px;
-    line-height: 1.6;
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .help-tooltip.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .help-tooltip p {
-    margin: 0 0 12px;
-  }
-
-  .help-tooltip p:last-child {
-    margin-bottom: 0;
-  }
-
-  .help-tooltip strong {
-    color: var(--orange);
-    font-weight: 600;
-  }
-
-  .help-tooltip ol {
-    margin: 8px 0 12px 20px;
-    padding: 0;
-  }
-
-  .help-tooltip li {
-    margin-bottom: 6px;
-  }
-}
