@@ -364,40 +364,83 @@ a { color: inherit; }
 МОДАЛЬНОЕ ОКНО С ПОДСКАЗКОЙ
 ===================================================================== */
 
-/* Кнопка помощи в углу карточки */
-.help-btn {
+/* Кнопка помощи - ТОЛЬКО НА МОБИЛЬНЫХ */
+.help-btn-mobile {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 2px solid var(--orange);
-  background: transparent;
+  border: 1.5px solid rgba(255, 106, 0, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--orange);
   cursor: pointer;
-  display: flex;
+  display: none; /* Скрыто на десктопе */
   align-items: center;
   justify-content: center;
-  transition: all 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 5;
   padding: 0;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.help-btn:hover {
-  background: var(--orange);
-  color: white;
-  transform: scale(1.08);
-  box-shadow: 0 4px 16px rgba(255, 106, 0, 0.3);
+.help-btn-mobile:hover {
+  transform: scale(1.05);
+  border-color: var(--orange);
+  box-shadow: 0 0 30px rgba(255, 106, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.help-btn:active {
+.help-btn-mobile:active {
   transform: scale(0.92);
 }
 
-.help-btn:focus-visible {
+.help-btn-mobile:focus-visible {
   outline: 2px solid var(--orange-deep);
   outline-offset: 3px;
+}
+
+/* Анимация мягкого свечения */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 106, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 106, 0, 0.3), 0 0 60px rgba(255, 106, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.help-btn-mobile {
+  animation: glow 2.5s ease-in-out infinite;
+}
+
+/* Состояние "уже использовали" - полупрозрачная */
+.help-btn-mobile.was-used {
+  opacity: 0.4;
+  animation: none;
+  border-color: rgba(255, 106, 0, 0.15);
+  box-shadow: 0 0 10px rgba(255, 106, 0, 0.05);
+}
+
+.help-btn-mobile.was-used:hover {
+  opacity: 0.8;
+  border-color: rgba(255, 106, 0, 0.3);
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.1);
+}
+
+/* Показываем только на мобильных */
+@media (max-width: 900px) {
+  .help-btn-mobile {
+    display: flex;
+  }
+}
+
+@media (min-width: 901px) {
+  .help-btn-mobile {
+    display: none !important;
+  }
 }
 
 /* Оверлей модалки */
@@ -595,16 +638,16 @@ a { color: inherit; }
     font-size: 40px;
   }
   
-  .help-btn {
+  .help-btn-mobile {
     width: 34px;
     height: 34px;
-    top: 12px;
-    right: 12px;
+    top: 10px;
+    right: 10px;
   }
   
-  .help-btn svg {
-    width: 16px;
-    height: 16px;
+  .help-btn-mobile svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
